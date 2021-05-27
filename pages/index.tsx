@@ -1,13 +1,20 @@
 import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import path from "path";
+import { promises as fs } from "fs";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import en from "../translations/en";
-import fr from "../translations/fr";
-export default function Home() {
-  const { locale } = useRouter();
+
+export default function Home({ en, fr }) {
+  const [locale, setLocale] = useState("");
+
+  useEffect(() => {
+    const { navigator } = window;
+    const { language: locale } = navigator;
+    setLocale(locale);
+  }, []);
 
   const t = locale === "en" || locale === "en-US" ? en : fr;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -63,10 +70,21 @@ export default function Home() {
         >
           {t.footer.text}
           <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+            <img src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
   );
 }
+
+export const getStaticProps = async () => {
+  const translationsDir = path.join(process.cwd(), "translations");
+
+  const enPromise = fs.readFile(path.join(translationsDir, "en.json"), "utf-8");
+  const frPromise = fs.readFile(path.join(translationsDir, "fr.json"), "utf-8");
+
+  const [en, fr] = await Promise.all([enPromise, frPromise]);
+
+  return { props: { en: JSON.parse(en), fr: JSON.parse(fr) } };
+};
