@@ -1,0 +1,29 @@
+const fr = {
+  title: "Créer Application du Next",
+  greeting: "Bienvenue à ",
+  description: "Commencer par éditer",
+  docs: {
+    h2: "Documentation",
+    p:
+      "Trouvez des informations détaillées sur les fonctionnalités et l'API de Next.js.",
+  },
+  learn: {
+    h2: "Apprendre",
+    p:
+      "Trouvez des informations détaillées sur les fonctionnalités et l'API de Next.js.",
+  },
+  examples: {
+    h2: "Examples",
+    p: "Découvrez et déployez des exemples de projets Next.js.",
+  },
+  deploy: {
+    h2: "Déployer",
+    p:
+      "Déployez instantanément votre site Next.js sur une URL publique avec Vercel. ",
+  },
+  footer: {
+    text: "Alimenté par",
+  },
+};
+
+export default fr;
